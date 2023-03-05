@@ -25,9 +25,28 @@ struct ContentView: View {
                         }
                         
                     }
-                    .onDelete { index in
-                        $link.remove(atOffsets: index)
+                    .swipeActions(edge: .leading) {
+                        Button(action: {
+                            //
+                        }) {
+                            Label("Edit", systemImage: "pencil")
+                        }
+                        .tint(.blue)
                     }
+                    
+                    .swipeActions(edge: .trailing) {
+                        Button(action: {
+                            //
+                        }) {
+                            Label("Delete", systemImage: "trash")
+                            
+                        }
+                        .tint(.red)
+                    }
+                    
+//                    .onDelete { index in
+//                        $link.remove(atOffsets: index)
+//                    }
                 }
                 .navigationBarItems(trailing: addButton())
                 .navigationTitle("My links")

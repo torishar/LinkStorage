@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 class ContentViewModel: ObservableObject {
     @Published var addLinkViewIsOpen = false

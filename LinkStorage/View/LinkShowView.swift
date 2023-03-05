@@ -11,14 +11,16 @@ struct LinkShowView: View {
     @State var url = ""
     @State var title = ""
     var body: some View {
-        NavigationView {
-            VStack {
+        ZStack {
+            VStack(spacing: 0) {
                WebView(openUrl: $url)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .ignoresSafeArea()
             }
-            //.navigationTitle(title)
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        
+
     }
 }
 

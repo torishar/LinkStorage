@@ -48,9 +48,10 @@ struct AddLinkView: View {
                 .background(Color("MediumPurple"))
                 .clipShape(Capsule())
             }
+            .navigationTitle("Add a new link")
             .navigationBarItems(trailing: closeAddLinkView())
             .padding()
-            //.background(.white)
+            
         }
     }
     

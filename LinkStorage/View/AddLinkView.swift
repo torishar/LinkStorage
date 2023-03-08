@@ -15,6 +15,8 @@ struct AddLinkView: View {
     @ObservedResults (Link.self) var link
     @EnvironmentObject var contentVM: ContentViewModel
     
+    @State var selectedLinkId: ObjectId?
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -32,6 +34,11 @@ struct AddLinkView: View {
                 Spacer()
                 
                 Button {
+                    if selectedLinkId != nil {
+                        $link.where = ({$0._id == selectedLinkId!})
+                        $link.remove(link.first!)
+                    }
+                    
                     let link = Link()
                     link.title = linkTitle
                     link.url = linkURL
@@ -52,6 +59,13 @@ struct AddLinkView: View {
             .navigationBarItems(trailing: closeAddLinkView())
             .padding()
             
+        }
+        .onAppear{
+            if selectedLinkId != nil {
+                $link.where = ({$0._id == selectedLinkId!})
+                linkTitle = link.first?.title ?? ""
+                linkURL = link.first?.url ?? ""
+            }
         }
     }
     

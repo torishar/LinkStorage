@@ -13,47 +13,40 @@ struct ContentView: View {
     
     @ObservedResults (Link.self) var link
     
+    @State var selectedLinkId: ObjectId? = nil
+    
     var body: some View {
         ZStack{
             NavigationView {
                 List {
-                    ForEach(link, id: \.self) { item in
+                    ForEach(link, id: \.id) { item in
                         NavigationLink {
                             LinkShowView(url: item.url, title: item.title)
                         } label: {
                             Text(item.title)
                         }
-                        
-                    }
-                    .swipeActions(edge: .leading) {
-                        Button(action: {
-                            //
-                        }) {
-                            Label("Edit", systemImage: "pencil")
+                        .swipeActions(edge: .leading) {
+                            Button(action: {
+                                selectedLinkId = item._id
+                                contentVM.addLinkViewIsOpen = true
+                            }) {
+                                Text("Edit")
+                            }
+                            .tint(.blue)
                         }
-                        .tint(.blue)
                     }
                     
-                    .swipeActions(edge: .trailing) {
-                        Button(action: {
-                            //
-                        }) {
-                            Label("Delete", systemImage: "trash")
-                            
-                        }
-                        .tint(.red)
-                    }
                     
-//                    .onDelete { index in
-//                        $link.remove(atOffsets: index)
-//                    }
+                    .onDelete { index in
+                        $link.remove(atOffsets: index)
+                    }
                 }
                 .navigationBarItems(trailing: addButton())
                 .navigationTitle("My links")
                 .navigationBarTitleDisplayMode(.large)
             }
             if contentVM.addLinkViewIsOpen {
-                AddLinkView()
+                AddLinkView(selectedLinkId: selectedLinkId)
                     .environmentObject(contentVM)
             }
         }
